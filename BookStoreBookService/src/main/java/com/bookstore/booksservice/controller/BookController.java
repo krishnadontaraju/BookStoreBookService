@@ -74,4 +74,22 @@ public class BookController {
 		
 	}
 	
+	//End point to change quantity of the Book available
+	@PutMapping("/changeBookQunatity/{bookNumber}")
+	public ResponseEntity<Response> changeBookQuantityAvailable (@PathVariable long bookNumber , int quantity){
+		
+		Response chnageBookQuantityResponse = bookService.changeBookQuantity(bookNumber , quantity);
+		return new ResponseEntity<Response> (chnageBookQuantityResponse , HttpStatus.OK);
+		
+	}
+	
+	//End point to Book price
+	@PutMapping("/changeBookPrice/{bookNumber}")
+	public ResponseEntity<Response> changeBookPrice(@PathVariable long bookNumber , float price){
+		
+		Response changeBookPriceResponse = bookService.changeBookPrice(bookNumber , price);
+		return new ResponseEntity<Response> (changeBookPriceResponse , HttpStatus.OK);
+		
+	}
+	
 }

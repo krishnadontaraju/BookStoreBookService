@@ -115,6 +115,42 @@ public class BookService implements IBookService{
 		}
 	}
 
+	@Override
+	public Response changeBookQuantity(long bookNumber, int quantity) {
+		log.info("Accessed change book available quantity");
+		Optional<BookModel> doesBookExist = bookRepository.findById(bookNumber);
+		
+		if (doesBookExist.isPresent()) {
+			log.info("Book with Title "+doesBookExist.get().getTitle()+" has been found now, changing available quantity");
+			doesBookExist.get().setQuantity(doesBookExist.get().getQuantity() + quantity);
+			bookRepository.save(doesBookExist.get());
+			log.info("Book price has been updated to "+doesBookExist.get().getPrice());
+			return new Response("Successfully updated the customer details" ,doesBookExist.get());
+		}else {
+			log.error("Book was not found for updation with Serial Number "+bookNumber);
+			throw new BookServiceException(501 , "Book not found with given details");
+		}
+	}
+
+	@Override
+	public Response changeBookPrice(long bookNumber, float price) {
+		
+		log.info("Accessed change book price");
+		
+		Optional<BookModel> doesBookExist = bookRepository.findById(bookNumber);
+		
+		if (doesBookExist.isPresent()) {
+			log.info("Book with Title "+doesBookExist.get().getTitle()+" has been found now, changing book price");
+			doesBookExist.get().setPrice(price);
+			bookRepository.save(doesBookExist.get());
+			log.info("Book price has been updated to "+doesBookExist.get().getPrice());
+			return new Response("Successfully updated the customer details" ,doesBookExist.get());
+		}else {
+			log.error("Book was not found for updation with Serial Number "+bookNumber);
+			throw new BookServiceException(501 , "Book not found with given details");
+		}
+	}
+
 	
 	
 }

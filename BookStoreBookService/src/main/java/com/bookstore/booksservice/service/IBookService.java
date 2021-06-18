@@ -15,4 +15,8 @@ public interface IBookService {
 
 	Response removeBook(String token);
 
+	Response changeBookQuantity(long bookNumber, int quantity);
+
+	Response changeBookPrice(long bookNumber, float price);
+
 }

@@ -25,6 +25,7 @@ public class BookModel {
 	private String logo;
 	private String image;
 	private float price;
+	private int quantity;
 	
 	public void updatecustomerDetails(BookDTO bookDTO) {
 		this.author = bookDTO.getAuthor();
@@ -33,6 +34,7 @@ public class BookModel {
 		this.price = bookDTO.getPrice();
 		this.image = bookDTO.getImage();
 		this.title = bookDTO.getTitle();
+		this.quantity = bookDTO.getQuantity();
 		
 	}
 

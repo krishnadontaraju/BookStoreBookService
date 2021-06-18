@@ -11,5 +11,6 @@ public class BookDTO {
 	private String logo;
 	private String image;
 	private float price;
+	private int quantity;
 	
 }
