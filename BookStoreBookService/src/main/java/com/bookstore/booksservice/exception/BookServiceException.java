@@ -1,5 +1,6 @@
 package com.bookstore.booksservice.exception;
 
+@SuppressWarnings("serial")
 public class BookServiceException extends RuntimeException {
 
 	@SuppressWarnings("unused")
