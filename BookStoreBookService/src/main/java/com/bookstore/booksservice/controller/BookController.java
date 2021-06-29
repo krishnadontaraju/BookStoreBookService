@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookstore.booksservice.dto.BookDTO;
@@ -36,10 +37,10 @@ public class BookController {
 	
 	//End pint to update the book details
 	
-	@PutMapping("/updateBook")
-	public ResponseEntity<Response> updateBook(@RequestBody BookDTO bookDTO , @RequestHeader String token) {
+	@PutMapping("/updateBook/{bookId}")
+	public ResponseEntity<Response> updateBook(@RequestBody BookDTO bookDTO , @RequestHeader String token ,@PathVariable long bookId) {
 		
-		Response updateBookResponse = bookService.updateBook(bookDTO , token);
+		Response updateBookResponse = bookService.updateBook(bookDTO , token ,bookId);
 		return new ResponseEntity<Response> (updateBookResponse , HttpStatus.OK);
 		
 	}
@@ -56,20 +57,20 @@ public class BookController {
 	
 	//End point to view a particular book
 	
-	@GetMapping("/viewBook/{token}")
-	public ResponseEntity<Response> viewBook(@PathVariable String token) {
+	@GetMapping("/viewBook/{bookId}")
+	public ResponseEntity<Response> viewBook(@PathVariable long bookId , @RequestHeader String token) {
 		
-		Response viewBookResponse = bookService.viewBook(token);
+		Response viewBookResponse = bookService.viewBook(token , bookId);
 		return new ResponseEntity<Response> (viewBookResponse , HttpStatus.OK);
 		
 	}
 	
 	//End point to remove the book
 	
-	@DeleteMapping("/removeBook")
-	public ResponseEntity<Response> removeBook(@RequestHeader String token) {
+	@DeleteMapping("/removeBook/{bookId}")
+	public ResponseEntity<Response> removeBook(@RequestHeader String token ,@PathVariable long bookId) {
 		
-		Response removeBookResponse = bookService.removeBook(token);
+		Response removeBookResponse = bookService.removeBook(token , bookId);
 		return new ResponseEntity<Response> (removeBookResponse , HttpStatus.OK);
 		
 	}
@@ -78,7 +79,7 @@ public class BookController {
 	@PutMapping("/changeBookQunatity/{bookNumber}")
 	public ResponseEntity<Response> changeBookQuantityAvailable (@PathVariable long bookNumber , int quantity){
 		
-		Response chnageBookQuantityResponse = bookService.changeBookQuantity(bookNumber , quantity);
+		Response chnageBookQuantityResponse = bookService.addBooksToInventory(bookNumber , quantity);
 		return new ResponseEntity<Response> (chnageBookQuantityResponse , HttpStatus.OK);
 		
 	}
@@ -92,4 +93,18 @@ public class BookController {
 		
 	}
 	
+	//End point for order service to fetch the book
+	@GetMapping("/fetchTitle/{bookId}")
+	public String fetchTitle(@PathVariable long bookId){
+		
+		return bookService.fetchBookTilte(bookId);
+		
+	}
+	
+	//End Point for Order Service to update the quantity of the books after order purchase
+	@PutMapping("/changeQuantity/{bookId}")
+	public void changeBookQuantityAfterPurchase(@PathVariable("bookId") long bookId , @RequestParam int quantity){
+		
+		bookService.changeBookQuantityAfterPurchase(bookId , quantity);
+	}
 }

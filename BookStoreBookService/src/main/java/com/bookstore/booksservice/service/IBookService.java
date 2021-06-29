@@ -7,16 +7,20 @@ public interface IBookService {
 
 	Response addBook(BookDTO bookDTO);
 
-	Response updateBook(BookDTO bookDTO, String token);
+	Response updateBook(BookDTO bookDTO, String token , long bookId);
 
 	Response viewBooks(String token);
 
-	Response viewBook(String token);
+	Response viewBook(String token ,long bookId);
 
-	Response removeBook(String token);
+	Response removeBook(String token ,long bookId);
 
-	Response changeBookQuantity(long bookNumber, int quantity);
+	Response addBooksToInventory(long bookNumber, int quantity);
 
 	Response changeBookPrice(long bookNumber, float price);
+	
+	String fetchBookTilte(long bookId);
+
+	void changeBookQuantityAfterPurchase(long bookId, int quantity);
 
 }
